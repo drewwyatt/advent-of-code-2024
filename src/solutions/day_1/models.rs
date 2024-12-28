@@ -12,7 +12,7 @@ impl Lists {
         self.0.sort();
         self.1.sort();
 
-        (0..self.0.len()).fold(0, |sum, index| sum + self.0[index] + self.1[index])
+        (0..self.0.len()).fold(0, |sum, index| sum + self.0[index].abs_diff(self.1[index]))
     }
 }
 
