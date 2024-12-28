@@ -1,4 +1,4 @@
-use crate::lib::solution::Solution;
+use crate::core::solution::Solution;
 use anyhow::Result;
 use models::Lists;
 

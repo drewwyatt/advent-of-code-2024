@@ -1,8 +1,8 @@
 use anyhow::Result;
 use clap::Parser;
-use lib::{input::read_input_for_day, solution::get_solution};
+use core::{input::read_input_for_day, solution::get_solution};
 
-pub mod lib;
+pub mod core;
 pub mod solutions;
 
 #[derive(Parser)]
