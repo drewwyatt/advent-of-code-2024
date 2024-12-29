@@ -17,7 +17,9 @@ impl Lists {
 
     pub fn get_similarity_score(&self) -> u32 {
         let mut counts = self.get_counts();
-        (0..self.0.len()).fold(0, |sum, index| sum + self.0[index] * *counts.entry(self.0[index]).or_insert(0))
+        (0..self.0.len()).fold(0, |sum, index| {
+            sum + self.0[index] * *counts.entry(self.0[index]).or_insert(0)
+        })
     }
 
     fn get_counts(&self) -> HashMap<u32, u32> {
