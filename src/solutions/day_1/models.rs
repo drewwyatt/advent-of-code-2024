@@ -1,5 +1,5 @@
 use anyhow::{anyhow, ensure, Error, Result};
-use std::str::FromStr;
+use std::{collections::HashMap, str::FromStr};
 
 const ERR_MISSING_VALUE: &str = "Missing value in column";
 const ERR_PARSE_ERROR: &str = "Failed to parse value";
@@ -13,6 +13,22 @@ impl Lists {
         self.1.sort();
 
         (0..self.0.len()).fold(0, |sum, index| sum + self.0[index].abs_diff(self.1[index]))
+    }
+
+    pub fn get_similarity_score(&self) -> u32 {
+        let mut counts = self.get_counts();
+        (0..self.0.len()).fold(0, |sum, index| sum + self.0[index] * *counts.entry(self.0[index]).or_insert(0))
+    }
+
+    fn get_counts(&self) -> HashMap<u32, u32> {
+        let mut counts = HashMap::new();
+        let Lists(_, right) = self;
+
+        for &n in right {
+            *counts.entry(n).or_insert(0) += 1;
+        }
+
+        counts
     }
 }
 

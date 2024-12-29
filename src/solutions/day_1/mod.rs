@@ -12,8 +12,9 @@ impl Solution for Day1Solution {
         Ok(lists.get_distance().to_string())
     }
 
-    fn part_2(&self, _input: &str) -> Result<String> {
-        Ok(format!("TODO!"))
+    fn part_2(&self, input: &str) -> Result<String> {
+        let lists: Lists = input.parse()?;
+        Ok(lists.get_similarity_score().to_string())
     }
 }
 
@@ -35,6 +36,17 @@ mod tests {
 
         match result {
             Ok(output) => assert_eq!(output, "11".to_string()),
+            Err(err) => panic!("Test failed with error: {}", err),
+        }
+    }
+
+    #[test]
+    fn part_2() {
+        let solution = Day1Solution;
+        let result = solution.part_2(INPUT);
+
+        match result {
+            Ok(output) => assert_eq!(output, "31".to_string()),
             Err(err) => panic!("Test failed with error: {}", err),
         }
     }
