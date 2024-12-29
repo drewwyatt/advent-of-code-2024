@@ -1,5 +1,6 @@
 use crate::core::solution::Solution;
 use anyhow::Result;
+use models::Map;
 
 mod models;
 
@@ -7,7 +8,9 @@ pub struct Day6Solution;
 
 impl Solution for Day6Solution {
     fn part_1(&self, input: &str) -> Result<String> {
-        todo!()
+        let mut map: Map = input.parse()?;
+        map.run_protocol();
+        Ok(map.count_visited().to_string())
     }
 
     fn part_2(&self, _input: &str) -> Result<String> {

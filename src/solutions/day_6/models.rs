@@ -16,7 +16,7 @@ enum Node {
     Obstruction,
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 enum Direction {
     North,
     East,
@@ -48,15 +48,75 @@ pub struct Map {
 }
 
 impl Map {
-    pub fn run_protocol(&mut self) {}
+    pub fn run_protocol(&mut self) {
+        let mut counter = 100_000;
+        while let Some(_) = self.try_move() {
+            counter -= 1;
+            if counter == 0 {
+                println!("stopping early. you took 100,000 moves...");
+                return;
+            }
+        }
+    }
 
-    fn try_move(&mut self) {}
+    pub fn count_visited(&self) -> i32 {
+        self.grid
+            .iter()
+            .flatten()
+            .fold(0, |acc, node: &Node| match node {
+                Node::Visited => acc + 1,
+                Node::CurrentPosition(_) => acc + 1,
+                _ => acc,
+            })
+    }
 
-    fn next_valid_direction(&self) -> Option<Direction> {}
+    fn try_move(&mut self) -> Option<()> {
+        let next_direction = self.next_valid_direction()?;
+        let (curr_x, curr_y) = self.current_position;
+        let (x, y) = self.next_move_for_direction(&next_direction)?;
+
+        self.grid[curr_y][curr_x] = Node::Visited;
+        self.grid[y][x] = Node::CurrentPosition(next_direction);
+        Some(())
+    }
+
+    fn next_valid_direction(&self) -> Option<Direction> {
+        let mut directions = self.clockwise_directions_from(
+            self.current_direction()
+                .expect("could not get current direction (???)"),
+        );
+
+        while directions.len() > 0 {
+            let direction = directions.remove(0);
+            let node = self.next_node_for_direction(&direction)?;
+
+            match node {
+                Node::Obstruction => continue,
+                _ => return Some(direction),
+            }
+        }
+
+        None
+    }
+
+    fn clockwise_directions_from(&self, direction: Direction) -> Vec<Direction> {
+        let mut all_directions = vec![
+            Direction::North,
+            Direction::East,
+            Direction::South,
+            Direction::West,
+        ];
+
+        while all_directions[0] != direction {
+            all_directions.rotate_left(1);
+        }
+
+        all_directions
+    }
 
     fn next_node_for_direction(&self, direction: &Direction) -> Option<Node> {
         self.next_move_for_direction(direction)
-            .map(|(x, y)| self.grid[x][y])
+            .map(|(x, y)| self.grid[y][x])
     }
 
     fn next_move_for_direction(&self, direction: &Direction) -> Option<Coords> {
@@ -95,7 +155,7 @@ impl Map {
 
     fn current_direction(&self) -> anyhow::Result<Direction> {
         let (x, y) = self.current_position;
-        match &self.grid[x][y] {
+        match &self.grid[y][x] {
             Node::CurrentPosition(direction) => Ok(*direction),
             node => Err(bad_current_position_err(x, y, node)),
         }
@@ -126,13 +186,16 @@ impl FromStr for Map {
             grid.push(row);
         }
 
+        let max_x = grid[0].len() - 1;
+        let max_y = grid.len() - 1;
+
         match current_position {
             Some((x, y)) => Ok(Map {
                 finished: false,
                 grid,
                 current_position: (x, y),
-                max_x: grid[0].len() - 1,
-                max_y: grid.len() - 1,
+                max_x,
+                max_y,
             }),
             None => Err(anyhow::anyhow!("Could not find a current position")),
         }
