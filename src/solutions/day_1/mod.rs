@@ -21,6 +21,7 @@ impl Solution for Day1Solution {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::core::util::assert_result_is;
 
     const INPUT: &str = "3   4
 4   3
@@ -32,22 +33,12 @@ mod tests {
     #[test]
     fn part_1() {
         let solution = Day1Solution;
-        let result = solution.part_1(INPUT);
-
-        match result {
-            Ok(output) => assert_eq!(output, "11".to_string()),
-            Err(err) => panic!("Test failed with error: {}", err),
-        }
+        assert_result_is(solution.part_1(INPUT), "11");
     }
 
     #[test]
     fn part_2() {
         let solution = Day1Solution;
-        let result = solution.part_2(INPUT);
-
-        match result {
-            Ok(output) => assert_eq!(output, "31".to_string()),
-            Err(err) => panic!("Test failed with error: {}", err),
-        }
+        assert_result_is(solution.part_2(INPUT), "31");
     }
 }

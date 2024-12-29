@@ -1,6 +1,7 @@
 use anyhow::Result;
 use clap::Parser;
-use core::{input::read_input_for_day, solution::get_solution};
+use core::solution::get_solution;
+use core::util::read_input_for_day;
 
 pub mod core;
 pub mod solutions;

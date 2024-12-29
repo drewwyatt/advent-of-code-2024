@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{Error, Result};
 use std::fs;
 use std::str::FromStr;
 
@@ -18,4 +18,11 @@ where
         .collect::<Vec<T>>();
 
     Ok(values)
+}
+
+pub fn assert_result_is(result: Result<String, Error>, expected: &str) {
+    match result {
+        Ok(output) => assert_eq!(output, expected.to_string()),
+        Err(err) => panic!("Test failed with error: {}", err),
+    }
 }
