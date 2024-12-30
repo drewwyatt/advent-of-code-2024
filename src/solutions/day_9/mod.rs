@@ -1,10 +1,15 @@
 use crate::core::solution::Solution;
+use models::Disk;
+
+mod models;
 
 pub struct Day9Solution;
 
 impl Solution for Day9Solution {
     fn part_1(&self, input: &str) -> anyhow::Result<i64> {
-        todo!()
+        let mut disk: Disk = input.parse()?;
+        disk.defrag()?;
+        Ok(disk.checksum())
     }
 
     fn part_2(&self, input: &str) -> anyhow::Result<i64> {

@@ -13,6 +13,7 @@ pub fn get_solution(day: &u8) -> Option<Arc<dyn Solution>> {
 
     registry.insert(&1, Arc::new(crate::solutions::day_1::Day1Solution));
     registry.insert(&6, Arc::new(crate::solutions::day_6::Day6Solution));
+    registry.insert(&9, Arc::new(crate::solutions::day_9::Day9Solution));
 
     registry.get(day).cloned()
 }
