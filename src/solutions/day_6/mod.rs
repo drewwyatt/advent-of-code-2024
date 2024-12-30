@@ -14,7 +14,7 @@ impl Solution for Day6Solution {
     }
 
     fn part_2(&self, _input: &str) -> Result<i64> {
-        todo!()
+        Ok(-1) // TODO
     }
 }
 
