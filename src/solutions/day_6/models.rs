@@ -41,7 +41,6 @@ type Coords = (usize, usize);
 
 pub struct Map {
     current_position: Coords,
-    finished: bool,
     grid: Vec<Vec<Node>>,
     max_x: usize,
     max_y: usize,
@@ -72,12 +71,16 @@ impl Map {
 
     fn try_move(&mut self) -> Option<()> {
         let next_direction = self.next_valid_direction()?;
-        let (curr_x, curr_y) = self.current_position;
         let (x, y) = self.next_move_for_direction(&next_direction)?;
-
-        self.grid[curr_y][curr_x] = Node::Visited;
-        self.grid[y][x] = Node::CurrentPosition(next_direction);
+        self.set_position(x, y, next_direction);
         Some(())
+    }
+
+    fn set_position(&mut self, x: usize, y: usize, direction: Direction) {
+        let (curr_x, curr_y) = self.current_position;
+        self.grid[curr_y][curr_x] = Node::Visited;
+        self.grid[y][x] = Node::CurrentPosition(direction);
+        self.current_position = (x, y);
     }
 
     fn next_valid_direction(&self) -> Option<Direction> {
@@ -191,7 +194,6 @@ impl FromStr for Map {
 
         match current_position {
             Some((x, y)) => Ok(Map {
-                finished: false,
                 grid,
                 current_position: (x, y),
                 max_x,
