@@ -20,9 +20,8 @@ impl Solution for Day6Solution {
 
 #[cfg(test)]
 mod tests {
-    use crate::core::util::assert_result_is;
-
     use super::*;
+    use crate::core::util::assert_result_is;
 
     const INPUT: &str = "....#.....
 .........#
