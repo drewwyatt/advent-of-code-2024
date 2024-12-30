@@ -4,8 +4,8 @@ use std::option::Option;
 use std::sync::Arc;
 
 pub trait Solution {
-    fn part_1(&self, input: &str) -> Result<String>;
-    fn part_2(&self, input: &str) -> Result<String>;
+    fn part_1(&self, input: &str) -> Result<i64>;
+    fn part_2(&self, input: &str) -> Result<i64>;
 }
 
 pub fn get_solution(day: &u8) -> Option<Arc<dyn Solution>> {

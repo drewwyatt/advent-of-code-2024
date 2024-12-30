@@ -7,14 +7,14 @@ mod models;
 pub struct Day1Solution;
 
 impl Solution for Day1Solution {
-    fn part_1(&self, input: &str) -> Result<String> {
+    fn part_1(&self, input: &str) -> Result<i64> {
         let mut lists: Lists = input.parse()?;
-        Ok(lists.get_distance().to_string())
+        Ok(lists.get_distance())
     }
 
-    fn part_2(&self, input: &str) -> Result<String> {
+    fn part_2(&self, input: &str) -> Result<i64> {
         let lists: Lists = input.parse()?;
-        Ok(lists.get_similarity_score().to_string())
+        Ok(lists.get_similarity_score())
     }
 }
 
@@ -33,12 +33,12 @@ mod tests {
     #[test]
     fn part_1() {
         let solution = Day1Solution;
-        assert_result_is(solution.part_1(INPUT), "11");
+        assert_result_is(solution.part_1(INPUT), 11);
     }
 
     #[test]
     fn part_2() {
         let solution = Day1Solution;
-        assert_result_is(solution.part_2(INPUT), "31");
+        assert_result_is(solution.part_2(INPUT), 31);
     }
 }

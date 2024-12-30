@@ -58,7 +58,7 @@ impl Map {
         }
     }
 
-    pub fn count_visited(&self) -> i32 {
+    pub fn count_visited(&self) -> i64 {
         self.grid
             .iter()
             .flatten()

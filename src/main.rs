@@ -22,14 +22,19 @@ fn main() -> Result<()> {
         Some(solution) => {
             let input = read_input_for_day(args.day as usize)?;
 
+            println!("");
+            println!("--------------------------------");
+
             match args.part {
-                1 => println!("[day {}][part 1]: {}", args.day, solution.part_1(&input)?),
-                2 => println!("[day {}][part 2]: {}", args.day, solution.part_2(&input)?),
+                1 => println!("day_{}::part_1 = {}", args.day, solution.part_1(&input)?),
+                2 => println!("day_{}::part_2 = {}", args.day, solution.part_2(&input)?),
                 _ => {
-                    println!("[day {}][part 1]: {}", args.day, solution.part_1(&input)?);
-                    println!("[day {}][part 2]: {}", args.day, solution.part_2(&input)?);
+                    println!("day_{}::part_1 = {}", args.day, solution.part_1(&input)?);
+                    println!("day_{}::part_2 = {}", args.day, solution.part_2(&input)?);
                 }
             };
+
+            println!("--------------------------------");
         }
         None => println!("No solution for day {}", args.day),
     };

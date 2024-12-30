@@ -20,9 +20,9 @@ where
     Ok(values)
 }
 
-pub fn assert_result_is(result: Result<String, Error>, expected: &str) {
+pub fn assert_result_is(result: Result<i64, Error>, expected: i64) {
     match result {
-        Ok(output) => assert_eq!(output, expected.to_string()),
+        Ok(output) => assert_eq!(output, expected),
         Err(err) => panic!("Test failed with error: {}", err),
     }
 }
